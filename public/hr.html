@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HR Dashboard - higher.io</title>
+  <style>
+    :root {
+      --primary: #4a6fa5;
+      --accent: #f7c873;
+      --bg: #f4f8fb;
+      --border: #dbe2ea;
+      --danger: #e57373;
+      --success: #81c784;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 2em 1em 1em 1em;
+      text-align: center;
+      margin-bottom: 2em;
+      box-shadow: 0 2px 8px rgba(74,111,165,0.08);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin: 0.5em 0 0 0;
+      font-size: 1.2em;
+      color: var(--accent);
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2em;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(74,111,165,0.07);
+    }
+    h2 {
+      margin-top: 2em;
+      color: var(--primary);
+      font-size: 1.5em;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.3em;
+    }
+    .section {
+      margin-bottom: 2em;
+    }
+    form {
+      margin-bottom: 1em;
+      background: var(--bg);
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(74,111,165,0.04);
+    }
+    label {
+      display: block;
+      margin-top: 0.5em;
+      font-weight: 500;
+      color: #333;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin-bottom: 0.7em;
+      padding: 0.5em;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-size: 1em;
+      background: #f9fbfd;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.7em 1.5em;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5em;
+    }
+    button:hover {
+      background: var(--accent);
+      color: #222;
+    }
+    .company, .job, .application {
+      border: 1px solid var(--border);
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 8px;
+      background: #f9fbfd;
+      box-shadow: 0 1px 4px rgba(74,111,165,0.03);
+    }
+    .company {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+    .company-logo {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: #fff;
+    }
+    .company-details {
+      flex: 1;
+    }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .job-type {
+      background: var(--accent);
+      color: #222;
+      padding: 0.2em 0.8em;
+      border-radius: 12px;
+      font-size: 0.9em;
+      margin-left: 1em;
+    }
+    .salary {
+      color: var(--success);
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .delete-job {
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      padding: 0.4em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95em;
+      margin-left: 1em;
+    }
+    .delete-job:hover {
+      background: #c62828;
+    }
+    .application-status {
+      font-weight: bold;
+      color: var(--primary);
+      margin-top: 0.5em;
+    }
+    .application {
+      background: #fffbe6;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 1em; }
+      header { padding: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>higher.io HR Dashboard</h1>
+    <p>Manage your company, job listings, and applications with ease.</p>
+  </header>
+  <div class="container">
+    <div class="section">
+      <h2>Companies</h2>
+      <form id="companyForm">
+        <label>Company Name <input name="name" required /></label>
+        <label>Logo URL <input name="logoUrl" /></label>
+        <label>Website <input name="website" type="url" /></label>
+        <label>Primary Color <input name="primaryColor" type="color" /></label>
+        <button type="submit">Add Company</button>
+      </form>
+      <div id="companies"></div>
+    </div>
+
+    <div class="section">
+      <h2>Jobs</h2>
+      <form id="jobForm">
+        <label>Company
+          <select name="companyId" id="companySelect" required></select>
+        </label>
+        <label>Title <input name="title" required /></label>
+        <label>Description <textarea name="description" required></textarea></label>
+        <label>Location <input name="location" required /></label>
+        <label>Type
+          <select name="type" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Contract">Contract</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </label>
+        <label>Salary <input name="salary" type="text" placeholder="e.g. $60,000 - $80,000" /></label>
+        <label>Requirements <textarea name="requirements" required></textarea></label>
+        <button type="submit">Add Job</button>
+      </form>
+      <div id="jobs"></div>
+    </div>
+
+    <div class="section">
+      <h2>Applications</h2>
+      <label>Filter by Job
+        <select id="jobFilter">
+          <option value="">All Jobs</option>
+        </select>
+      </label>
+      <div id="applications"></div>
+    </div>
+  </div>
+  <script>
+    // --- Companies ---
+    async function loadCompanies() {
+      const res = await fetch('/api/company');
+      const companies = await res.json();
+      const companiesDiv = document.getElementById('companies');
+      companiesDiv.innerHTML = '';
+      const companySelect = document.getElementById('companySelect');
+      companySelect.innerHTML = '';
+      companies.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'company';
+        el.innerHTML = `
+          <img src="${c.logoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(c.name)}" class="company-logo" alt="logo" />
+          <div class="company-details">
+            <strong style="color:${c.primaryColor || 'var(--primary)'}">${c.name}</strong>
+            ${c.website ? `<br><a href="${c.website}" target="_blank" style="color:var(--primary);text-decoration:underline;">${c.website}</a>` : ''}
+          </div>
+          <span style="background:${c.primaryColor};padding:0 1em;border-radius:8px;">&nbsp;</span>
+        `;
+        companiesDiv.appendChild(el);
+
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.name;
+        companySelect.appendChild(opt);
+      });
+    }
+
+    document.getElementById('companyForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const payload = {
+        name: formData.get('name'),
+        logoUrl: formData.get('logoUrl'),
+        website: formData.get('website'),
+        primaryColor: formData.get('primaryColor')
+      };
+      await fetch('/api/company', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      e.target.reset();
+      await loadCompanies();
+      await loadJobs();
+    });
+
+    // --- Jobs ---
+    async function loadJobs() {
+      const res = await fetch('/api/job');
+      const jobs = await res.json();
+      const jobsDiv = document.getElementById('jobs');
+      jobsDiv.innerHTML = '';
+      const jobFilter = document.getElementById('jobFilter');
+      jobFilter.innerHTML = '<option value="">All Jobs</option>';
+      jobs.forEach(j => {
+        const el = document.createElement('div');
+        el.className = 'job';
+        el.innerHTML = `
+          <div class="job-header">
+            <span>
+              <strong>${j.title}</strong>
+              <span class="job-type">${j.type || 'Full-time'}</span>
+            </span>
+            <span class="salary">${j.salary || ''}</span>
+          </div>
+          <div style="margin-top:0.5em;">
+            <span style="color:var(--primary);font-weight:500;">Location:</span> ${j.location}
+          </div>
+          <div style="margin-top:0.5em;">
+            <span style="color:var(--primary);font-weight:500;">Description:</span> ${j.description}
+          </div>
+          <div style="margin-top:0.5em;">
+            <span style="color:var(--primary);font-weight:500;">Requirements:</span> ${j.requirements}
+          </div>
+          <button data-id="${j.id}" class="delete-job">Delete</button>
+        `;
+        jobsDiv.appendChild(el);
+
+        const opt = document.createElement('option');
+        opt.value = j.id;
+        opt.textContent = j.title;
+        jobFilter.appendChild(opt);
+      });
+    }
+
+    document.getElementById('jobForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const payload = {
+        companyId: formData.get('companyId'),
+        title: formData.get('title'),
+        description: formData.get('description'),
+        location: formData.get('location'),
+        type: formData.get('type'),
+        salary: formData.get('salary'),
+        requirements: formData.get('requirements')
+      };
+      await fetch('/api/job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      e.target.reset();
+      await loadJobs();
+      await loadApplications();
+    });
+
+    document.addEventListener('click', async function(e) {
+      if (e.target.classList.contains('delete-job')) {
+        const id = e.target.getAttribute('data-id');
+        await fetch(`/api/job/${id}`, { method: 'DELETE' });
+        await loadJobs();
+        await loadApplications();
+      }
+    });
+
+    // --- Applications ---
+    async function loadApplications() {
+      const jobId = document.getElementById('jobFilter').value;
+      let url = '/api/application';
+      if (jobId) url = `/api/application/job/${jobId}`;
+      else url = '/api/application';
+      const res = await fetch(url);
+      const applications = await res.json();
+      const applicationsDiv = document.getElementById('applications');
+      applicationsDiv.innerHTML = '';
+      applications.forEach(a => {
+        const el = document.createElement('div');
+        el.className = 'application';
+        el.innerHTML = `
+          <strong>${a.name}</strong> (${a.email})<br>
+          <span style="color:var(--primary);font-weight:500;">Job ID:</span> ${a.jobId}<br>
+          <span style="color:var(--primary);font-weight:500;">Resume:</span> <a href="${a.resumeUrl}" target="_blank">${a.resumeUrl}</a>
+          <div class="application-status">Status: Received</div>
+        `;
+        applicationsDiv.appendChild(el);
+      });
+    }
+
+    document.getElementById('jobFilter').addEventListener('change', loadApplications);
+
+    // --- Initial load ---
+    loadCompanies();
+    loadJobs();
+    loadApplications();
+  </script>
+</body>
+</html>

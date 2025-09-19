@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume Parser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/3f26db12fd.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">PreHireAI</div>
+    <div class="nav-items">
+      <a href="#" class="nav-item">Home</a>
+      <a href="#" class="nav-item">Features</a>
+      <a href="#" class="nav-item">Pricing</a>
+      <a href="#" class="nav-item">Login</a>
+    </div>
+  </nav>
+  <header>
+    <div class="container">
+      <h1>Resume Parser</h1>
+      <p>Extract structured data from resumes in seconds</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+        <h3>Multiple Formats</h3>
+        <p>Support for PDF, DOCX, and TXT files</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Fast Processing</h3>
+        <p>Get results in seconds</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-code"></i></div>
+        <h3>Structured JSON</h3>
+        <p>Easy to integrate with your application</p>
+      </div>
+    </div>
+
+    <div class="two-columns">
+      <div class="card">
+        <h2>Upload Resume File</h2>
+        <div class="file-upload">
+          <div class="file-upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <p>Drop your file here or click to browse</p>
+          <p class="small">Supports PDF, DOCX, TXT (Max 5MB)</p>
+          <input id="fileInput" type="file" accept=".pdf,.docx,.txt" />
+        </div>
+        <div class="checkbox-wrapper">
+          <input id="rawChk" type="checkbox" />
+          <label for="rawChk">Include raw text in response</label>
+        </div>
+        <button id="parseFileBtn" class="btn-primary">
+          <span class="spinner"></span>Parse File
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Paste Resume Text</h2>
+        <textarea id="textInput" placeholder="Paste resume text here..."></textarea>
+        <div class="checkbox-wrapper">
+          <input id="rawChkText" type="checkbox" />
+          <label for="rawChkText">Include raw text in response</label>
+        </div>
+        <button id="parseTextBtn" class="btn-primary">
+          <span class="spinner"></span>Parse Text
+        </button>
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <div class="card">
+      <div class="actions">
+        <button id="copyBtn" disabled>
+          <i class="fas fa-copy"></i> Copy JSON
+        </button>
+        <button id="downloadBtn" disabled>
+          <i class="fas fa-download"></i> Download JSON
+        </button>
+      </div>
+      <pre id="output" class="output">{}</pre>
+    </div>
+
+    <footer>
+      <p>Resume Parser API • Easily extract structured data from resumes</p>
+      <p><small>API available at <code>/parse</code> endpoint • <a href="/docs" target="_blank">API Documentation</a></small></p>
+    </footer>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>
