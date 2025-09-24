@@ -1,0 +1,97 @@
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.job-details {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--elevation);
+}
+
+.job-details h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.job-meta {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.job-content section {
+  margin-bottom: 2rem;
+}
+
+.job-content h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.application-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--elevation);
+}
+
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.form-section h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field.full {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}

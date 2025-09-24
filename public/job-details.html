@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Details - highr.ai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/job-details.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">highr.ai</a>
+    <div class="nav-links">
+      <a href="/jobs">Browse Jobs</a>
+      <a href="/companies">Companies</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <div class="job-details" id="jobDetails">
+      <!-- Job details will be inserted here -->
+    </div>
+
+    <form id="applicationForm" class="application-form" enctype="multipart/form-data">
+      <h2>Apply for this position</h2>
+      
+      <!-- Personal Information -->
+      <div class="form-section">
+        <h3>Personal Information</h3>
+        <div class="form-grid">
+          <div class="form-field full">
+            <label>Full Name *</label>
+            <input type="text" name="fullName" required>
+          </div>
+          <div class="form-field">
+            <label>Email Address *</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label>Phone Number *</label>
+            <input type="tel" name="phone" required>
+          </div>
+          <div class="form-field">
+            <label>Current Location *</label>
+            <input type="text" name="location" required>
+          </div>
+          <div class="form-field">
+            <label>Work Authorization</label>
+            <select name="workAuth">
+              <option value="citizen">Citizen</option>
+              <option value="permanent">Permanent Resident</option>
+              <option value="h1b">H1B Visa</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Information -->
+      <div class="form-section">
+        <h3>Professional Information</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Resume/CV *</label>
+            <input type="file" name="resumeFile" accept=".pdf,.doc,.docx" required>
+          </div>
+          <div class="form-field">
+            <label>Current Role</label>
+            <input type="text" name="currentRole">
+          </div>
+          <div class="form-field">
+            <label>Years of Experience *</label>
+            <input type="number" name="experience" required>
+          </div>
+          <div class="form-field">
+            <label>LinkedIn Profile</label>
+            <input type="url" name="linkedin">
+          </div>
+        </div>
+      </div>
+
+      <!-- Application Details -->
+      <div class="form-section">
+        <h3>Application Details</h3>
+        <div class="form-grid">
+          <input type="hidden" name="jobId" id="jobId">
+          <div class="form-field">
+            <label>Expected Salary Range *</label>
+            <input type="text" name="expectedSalary" required>
+          </div>
+          <div class="form-field">
+            <label>Notice Period *</label>
+            <select name="noticePeriod" required>
+              <option value="immediate">Immediate</option>
+              <option value="15days">15 Days</option>
+              <option value="30days">30 Days</option>
+              <option value="60days">60 Days</option>
+              <option value="90days">90+ Days</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>Cover Letter</label>
+            <textarea name="coverLetter" placeholder="Why are you a good fit for this role?"></textarea>
+          </div>
+          <div class="form-field">
+            <label>Portfolio/GitHub</label>
+            <input type="url" name="portfolio">
+          </div>
+          <div class="form-field">
+            <label>Preferred Location</label>
+            <input type="text" name="preferredLocation">
+          </div>
+          <div class="form-field">
+            <label>Referral</label>
+            <input type="text" name="referral" placeholder="Employee name if referred">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // Load job details
+    async function loadJobDetails() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const jobId = urlParams.get('id');
+      if (!jobId) return;
+
+      try {
+        const response = await fetch(`/api/job/${jobId}`);
+        const job = await response.json();
+        document.getElementById('jobId').value = job.id;
+        renderJobDetails(job);
+        renderApplicationForm(job); // <-- Ensure this is called
+      } catch (error) {
+        console.error('Error loading job details:', error);
+      }
+    }
+
+    function renderJobDetails(job) {
+      const details = document.getElementById('jobDetails');
+      details.innerHTML = `
+        <h1>${job.title}</h1>
+        <div class="job-meta">
+          <span>${job.department}</span> • 
+          <span>${job.location}</span> • 
+          <span>${job.employmentType}</span>
+        </div>
+        <div class="job-content">
+          <section>
+            <h3>Description</h3>
+            <p>${job.description}</p>
+          </section>
+          <section>
+            <h3>Responsibilities</h3>
+            <p>${job.responsibilities}</p>
+          </section>
+          <section>
+            <h3>Requirements</h3>
+            <p>${job.requiredQualifications}</p>
+          </section>
+          <section>
+            <h3>Benefits</h3>
+            <p>${job.benefits || 'Competitive benefits package'}</p>
+          </section>
+        </div>
+      `;
+
+      // Update form fields based on job configuration
+      if (job.applicationForm) {
+        const professionalSection = document.querySelector('.form-section:nth-child(2) .form-grid');
+        
+        // Add required tech profile fields
+        job.applicationForm.requiredFields.forEach(field => {
+          const fieldHtml = `
+            <div class="form-field">
+              <label>${getFieldLabel(field)} ${field.required ? '*' : ''}</label>
+              <input type="${getFieldType(field)}" 
+                     name="${field}" 
+                     ${field.required ? 'required' : ''}
+                     placeholder="Enter your ${field} URL">
+            </div>
+          `;
+          professionalSection.insertAdjacentHTML('beforeend', fieldHtml);
+        });
+
+        // Add custom fields
+        if (job.applicationForm.customFields?.length) {
+          const customSection = document.createElement('div');
+          customSection.className = 'form-section';
+          customSection.innerHTML = `
+            <h3>Additional Information</h3>
+            <div class="form-grid">
+              ${job.applicationForm.customFields.map(field => `
+                <div class="form-field ${field.type === 'textarea' ? 'full' : ''}">
+                  <label>${field.label} ${field.required ? '*' : ''}</label>
+                  ${renderCustomField(field)}
+                </div>
+              `).join('')}
+            </div>
+          `;
+          document.getElementById('applicationForm').insertBefore(
+            customSection, 
+            document.querySelector('.form-actions')
+          );
+        }
+      }
+    }
+
+    function renderApplicationForm(job) {
+      // Find the Professional Information section
+      const professionalSection = document.querySelector('.form-section:nth-child(2) .form-grid');
+      // Remove previously rendered dynamic fields
+      professionalSection.querySelectorAll('.dynamic-field').forEach(el => el.remove());
+
+      // Render selected required fields (GitHub, LeetCode, etc.)
+      if (job.applicationForm && Array.isArray(job.applicationForm.requiredFields)) {
+        job.applicationForm.requiredFields.forEach(field => {
+          const label = getFieldLabel(field);
+          const fieldHtml = `
+            <div class="form-field dynamic-field">
+              <label>${label} *</label>
+              <input type="url" name="${field}" required placeholder="Enter your ${label}">
+            </div>
+          `;
+          professionalSection.insertAdjacentHTML('beforeend', fieldHtml);
+        });
+      }
+
+      // Render custom fields if any
+      if (job.applicationForm && Array.isArray(job.applicationForm.customFields) && job.applicationForm.customFields.length) {
+        let customSection = document.getElementById('customFieldsSection');
+        if (!customSection) {
+          customSection = document.createElement('div');
+          customSection.className = 'form-section';
+          customSection.id = 'customFieldsSection';
+          customSection.innerHTML = `<h3>Additional Information</h3><div class="form-grid"></div>`;
+          document.getElementById('applicationForm').insertBefore(
+            customSection,
+            document.querySelector('.form-actions')
+          );
+        }
+        const customGrid = customSection.querySelector('.form-grid');
+        customGrid.innerHTML = '';
+        job.applicationForm.customFields.forEach(field => {
+          customGrid.innerHTML += `
+            <div class="form-field dynamic-field${field.type === 'textarea' ? ' full' : ''}">
+              <label>${field.label}${field.required ? ' *' : ''}</label>
+              ${renderCustomField(field)}
+            </div>
+          `;
+        });
+      }
+    }
+
+    function getFieldLabel(field) {
+      const labels = {
+        github: 'GitHub Profile',
+        portfolio: 'Portfolio/Projects',
+        leetcode: 'LeetCode Profile',
+        linkedin: 'LinkedIn Profile',
+        stackoverflow: 'Stack Overflow Profile',
+        kaggle: 'Kaggle Profile'
+      };
+      return labels[field] || field;
+    }
+
+    function getFieldType(field) {
+      return ['github', 'portfolio', 'linkedin', 'leetcode', 'stackoverflow', 'kaggle'].includes(field) 
+        ? 'url' 
+        : 'text';
+    }
+
+    function renderCustomField(field) {
+      switch (field.type) {
+        case 'textarea':
+          return `
+            <textarea 
+              name="custom_${field.label}"
+              ${field.required ? 'required' : ''}
+              placeholder="Enter ${field.label}"
+              class="form-textarea"
+            ></textarea>`;
+        case 'select':
+          return `
+            <select 
+              name="custom_${field.label}"
+              ${field.required ? 'required' : ''}
+              class="form-select"
+            >
+              <option value="">Select ${field.label}</option>
+              ${field.options?.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+            </select>`;
+        default:
+          return `
+            <input 
+              type="${field.type}"
+              name="custom_${field.label}"
+              ${field.required ? 'required' : ''}
+              placeholder="Enter ${field.label}"
+              class="form-input"
+            >`;
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('applicationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      
+      // Add custom fields to formData
+      document.querySelectorAll('[name^="custom_"]').forEach(field => {
+        formData.append(field.name, field.value);
+      });
+
+      try {
+        const response = await fetch('/api/application/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const result = await response.json();
+          throw new Error(result.error || 'Application submission failed');
+        }
+
+        alert('Application submitted successfully!');
+        window.location.href = '/';
+      } catch (error) {
+        alert('Error submitting application: ' + error.message);
+        console.error('Submission error:', error);
+      }
+    });
+
+    // Load job details on page load
+    loadJobDetails();
+  </script>
+</body>
+</html>

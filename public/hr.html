@@ -2,363 +2,763 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HR Dashboard - higher.io</title>
+  <title>TalentBridge HR</title>
   <style>
     :root {
-      --primary: #4a6fa5;
-      --accent: #f7c873;
-      --bg: #f4f8fb;
-      --border: #dbe2ea;
-      --danger: #e57373;
-      --success: #81c784;
+      --primary: #1976d2;
+      --background: #F7F8FA;
+      --surface: #fff;
+      --text: #212121;
+      --text-secondary: #757575;
+      --border: #E0E0E0;
+      --elevation: 0px 1px 3px rgba(0, 0, 0, 0.1);
     }
+
+    * { box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--bg);
       margin: 0;
       padding: 0;
-      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--background);
+      color: var(--text);
     }
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 2em 1em 1em 1em;
-      text-align: center;
-      margin-bottom: 2em;
-      box-shadow: 0 2px 8px rgba(74,111,165,0.08);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin: 0.5em 0 0 0;
-      font-size: 1.2em;
-      color: var(--accent);
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2em;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(74,111,165,0.07);
-    }
-    h2 {
-      margin-top: 2em;
-      color: var(--primary);
-      font-size: 1.5em;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 0.3em;
-    }
-    .section {
-      margin-bottom: 2em;
-    }
-    form {
-      margin-bottom: 1em;
-      background: var(--bg);
-      padding: 1em;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(74,111,165,0.04);
-    }
-    label {
-      display: block;
-      margin-top: 0.5em;
-      font-weight: 500;
-      color: #333;
-    }
-    input, textarea, select {
-      width: 100%;
-      margin-bottom: 0.7em;
-      padding: 0.5em;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      font-size: 1em;
-      background: #f9fbfd;
-    }
-    button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.7em 1.5em;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 0.5em;
-    }
-    button:hover {
-      background: var(--accent);
-      color: #222;
-    }
-    .company, .job, .application {
-      border: 1px solid var(--border);
-      padding: 1em;
-      margin-bottom: 1em;
-      border-radius: 8px;
-      background: #f9fbfd;
-      box-shadow: 0 1px 4px rgba(74,111,165,0.03);
-    }
-    .company {
+
+    .app-header {
       display: flex;
       align-items: center;
-      gap: 1em;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 64px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
     }
-    .company-logo {
-      height: 40px;
-      width: 40px;
-      object-fit: contain;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      background: #fff;
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
     }
-    .company-details {
+
+    .header-nav {
+      display: flex;
+      gap: 32px;
+    }
+
+    .header-nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .layout {
+      display: flex;
+      height: calc(100vh - 64px);
+    }
+
+    .sidebar {
+      width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+    }
+
+    .nav-item {
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      background: #F3F4F6;
+      color: var(--primary);
+    }
+
+    .main-content {
       flex: 1;
+      padding: 24px;
+      background: var(--background);
     }
-    .job-header {
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-input {
+      width: 240px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 4px;
+      box-shadow: var(--elevation);
+    }
+
+    .card-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .job-type {
-      background: var(--accent);
-      color: #222;
-      padding: 0.2em 0.8em;
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      text-align: left;
+      padding: 12px 24px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table td {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .candidate-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E3F2FD;
+    }
+
+    .badge {
+      padding: 4px 12px;
       border-radius: 12px;
-      font-size: 0.9em;
-      margin-left: 1em;
+      font-size: 12px;
+      font-weight: 500;
     }
-    .salary {
-      color: var(--success);
-      font-weight: bold;
-      font-size: 1.1em;
+
+    .badge.interview {
+      background: #E3F2FD;
+      color: #1976D2;
     }
-    .delete-job {
-      background: var(--danger);
-      color: #fff;
+
+    .badge.hired {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 4px;
+      background: none;
       border: none;
-      padding: 0.4em 1em;
-      border-radius: 5px;
       cursor: pointer;
-      font-size: 0.95em;
-      margin-left: 1em;
+      color: var(--text-secondary);
     }
-    .delete-job:hover {
-      background: #c62828;
+
+    .kanban-container {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      overflow-x: auto;
+      min-height: calc(100vh - 180px);
     }
-    .application-status {
-      font-weight: bold;
-      color: var(--primary);
-      margin-top: 0.5em;
+
+    .kanban-column {
+      flex: 0 0 300px;
+      background: var(--surface);
+      border-radius: 8px;
+      box-shadow: var(--elevation);
     }
-    .application {
-      background: #fffbe6;
+
+    .kanban-column-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    @media (max-width: 700px) {
-      .container { padding: 1em; }
-      header { padding: 1em; }
+
+    .kanban-cards {
+      padding: 1rem;
+      min-height: 200px;
     }
+
+    .kanban-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      cursor: grab;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kanban-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--elevation);
+    }
+
+    .kanban-card.dragging {
+      opacity: 0.5;
+    }
+
+    .priority-tag {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .priority-urgent { background: #fee2e2; color: #dc2626; }
+    .priority-referred { background: #dbeafe; color: #2563eb; }
+    .priority-normal { background: #f3f4f6; color: #6b7280; }
+
+    .candidate-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100vh;
+      background: white;
+      box-shadow: var(--elevation-3);
+      transition: right 0.3s;
+      z-index: 1000;
+    }
+
+    .candidate-panel.active {
+      right: 0;
+    }
+
+    .candidate-panel-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .candidate-panel-content {
+      padding: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .kanban-column {
+        flex: 0 0 280px;
+      }
+      
+      .candidate-panel {
+        width: 100%;
+        right: -100%;
+      }
+    }
+
+    .status-select {
+      padding: 4px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      background: white;
+    }
+    
+    /* Status colors */
+    .status-applied { background: #f3f4f6; color: #6b7280; }
+    .status-screening { background: #fff7ed; color: #c2410c; }
+    .status-interview { background: #e3f2fd; color: #1976d2; }
+    .status-offer { background: #f0fdf4; color: #15803d; }
+    .status-hired { background: #e8f5e9; color: #2e7d32; }
+    .status-rejected { background: #fef2f2; color: #dc2626; }
   </style>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/hr-dashboard.css">
 </head>
 <body>
-  <header>
-    <h1>higher.io HR Dashboard</h1>
-    <p>Manage your company, job listings, and applications with ease.</p>
+  <header class="app-header">
+    <div class="logo">TalentBridge HR</div>
+    <nav class="header-nav">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Analytics</a>
+      <a href="#">Settings</a>
+    </nav>
+    <div class="header-actions">
+      <span class="notifications">🔔</span>
+      <span class="avatar">👤</span>
+    </div>
   </header>
-  <div class="container">
-    <div class="section">
-      <h2>Companies</h2>
-      <form id="companyForm">
-        <label>Company Name <input name="name" required /></label>
-        <label>Logo URL <input name="logoUrl" /></label>
-        <label>Website <input name="website" type="url" /></label>
-        <label>Primary Color <input name="primaryColor" type="color" /></label>
-        <button type="submit">Add Company</button>
-      </form>
-      <div id="companies"></div>
-    </div>
 
-    <div class="section">
-      <h2>Jobs</h2>
-      <form id="jobForm">
-        <label>Company
-          <select name="companyId" id="companySelect" required></select>
-        </label>
-        <label>Title <input name="title" required /></label>
-        <label>Description <textarea name="description" required></textarea></label>
-        <label>Location <input name="location" required /></label>
-        <label>Type
-          <select name="type" required>
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Contract">Contract</option>
-            <option value="Internship">Internship</option>
-          </select>
-        </label>
-        <label>Salary <input name="salary" type="text" placeholder="e.g. $60,000 - $80,000" /></label>
-        <label>Requirements <textarea name="requirements" required></textarea></label>
-        <button type="submit">Add Job</button>
-      </form>
-      <div id="jobs"></div>
-    </div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-item" onclick="switchView('candidates')">
+        <span>👥</span>
+        <span>Candidates</span>
+      </div>
+      <div class="nav-item" onclick="switchView('kanban')">
+        <span>📋</span>
+        <span>Kanban Board</span>
+      </div>
+      <div class="nav-item" onclick="window.location.href='/create-job.html'">
+        <span>➕</span>
+        <span>Create Job Listing</span>
+      </div>
+    </aside>
 
-    <div class="section">
-      <h2>Applications</h2>
-      <label>Filter by Job
-        <select id="jobFilter">
-          <option value="">All Jobs</option>
-        </select>
-      </label>
-      <div id="applications"></div>
-    </div>
+    <main class="main-content">
+      <!-- Candidates List View -->
+      <div id="candidatesView">
+        <div class="page-header">
+          <h1 class="page-title">Candidates</h1>
+          <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search candidates...">
+            <button class="filter-btn">
+              <span>⚡</span>
+              Filter
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>All Candidates</span>
+            <span class="total-count">148 total</span>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Applied</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="candidatesTable">
+              <!-- Table content will be inserted by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Kanban Board View -->
+      <div id="kanbanView" style="display: none;">
+        <div class="kanban-header">
+          <h2 class="page-title">Hiring Pipeline</h2>
+          <button class="btn btn-primary" onclick="addNewCandidate()">
+            <i class="fas fa-plus"></i> Add Candidate
+          </button>
+        </div>
+        
+        <div class="kanban-container">
+          <div class="kanban-column" data-status="applied">
+            <div class="kanban-column-header">
+              <span>Applied</span>
+              <span class="kanban-column-count">0</span>
+            </div>
+            <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          </div>
+          
+          <div class="kanban-column" data-status="screening">
+            <div class="kanban-column-header">
+              <span>Screening</span>
+              <span class="kanban-column-count">0</span>
+            </div>
+            <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          </div>
+          
+          <div class="kanban-column" data-status="interview">
+            <div class="kanban-column-header">
+              <span>Interview</span>
+              <span class="kanban-column-count">0</span>
+            </div>
+            <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          </div>
+          
+          <div class="kanban-column" data-status="offer">
+            <div class="kanban-column-header">
+              <span>Offer</span>
+              <span class="kanban-column-count">0</span>
+            </div>
+            <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          </div>
+          
+          <div class="kanban-column" data-status="hired">
+            <div class="kanban-column-header">
+              <span>Hired</span>
+              <span class="kanban-column-count">0</span>
+            </div>
+            <div class="kanban-cards" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          </div>
+        </div>
+
+        <!-- Candidate Details Panel -->
+        <div id="candidatePanel" class="candidate-panel">
+          <div class="candidate-panel-header">
+            <h3>Candidate Details</h3>
+            <button onclick="closePanel()" class="close-btn">×</button>
+          </div>
+          <div class="candidate-panel-content"></div>
+        </div>
+      </div>
+    </main>
   </div>
+
   <script>
-    // --- Companies ---
-    async function loadCompanies() {
-      const res = await fetch('/api/company');
-      const companies = await res.json();
-      const companiesDiv = document.getElementById('companies');
-      companiesDiv.innerHTML = '';
-      const companySelect = document.getElementById('companySelect');
-      companySelect.innerHTML = '';
-      companies.forEach(c => {
-        const el = document.createElement('div');
-        el.className = 'company';
-        el.innerHTML = `
-          <img src="${c.logoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(c.name)}" class="company-logo" alt="logo" />
-          <div class="company-details">
-            <strong style="color:${c.primaryColor || 'var(--primary)'}">${c.name}</strong>
-            ${c.website ? `<br><a href="${c.website}" target="_blank" style="color:var(--primary);text-decoration:underline;">${c.website}</a>` : ''}
-          </div>
-          <span style="background:${c.primaryColor};padding:0 1em;border-radius:8px;">&nbsp;</span>
-        `;
-        companiesDiv.appendChild(el);
-
-        const opt = document.createElement('option');
-        opt.value = c.id;
-        opt.textContent = c.name;
-        companySelect.appendChild(opt);
-      });
-    }
-
-    document.getElementById('companyForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const payload = {
-        name: formData.get('name'),
-        logoUrl: formData.get('logoUrl'),
-        website: formData.get('website'),
-        primaryColor: formData.get('primaryColor')
-      };
-      await fetch('/api/company', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      e.target.reset();
-      await loadCompanies();
-      await loadJobs();
-    });
-
-    // --- Jobs ---
-    async function loadJobs() {
-      const res = await fetch('/api/job');
-      const jobs = await res.json();
-      const jobsDiv = document.getElementById('jobs');
-      jobsDiv.innerHTML = '';
-      const jobFilter = document.getElementById('jobFilter');
-      jobFilter.innerHTML = '<option value="">All Jobs</option>';
-      jobs.forEach(j => {
-        const el = document.createElement('div');
-        el.className = 'job';
-        el.innerHTML = `
-          <div class="job-header">
-            <span>
-              <strong>${j.title}</strong>
-              <span class="job-type">${j.type || 'Full-time'}</span>
-            </span>
-            <span class="salary">${j.salary || ''}</span>
-          </div>
-          <div style="margin-top:0.5em;">
-            <span style="color:var(--primary);font-weight:500;">Location:</span> ${j.location}
-          </div>
-          <div style="margin-top:0.5em;">
-            <span style="color:var(--primary);font-weight:500;">Description:</span> ${j.description}
-          </div>
-          <div style="margin-top:0.5em;">
-            <span style="color:var(--primary);font-weight:500;">Requirements:</span> ${j.requirements}
-          </div>
-          <button data-id="${j.id}" class="delete-job">Delete</button>
-        `;
-        jobsDiv.appendChild(el);
-
-        const opt = document.createElement('option');
-        opt.value = j.id;
-        opt.textContent = j.title;
-        jobFilter.appendChild(opt);
-      });
-    }
-
-    document.getElementById('jobForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const payload = {
-        companyId: formData.get('companyId'),
-        title: formData.get('title'),
-        description: formData.get('description'),
-        location: formData.get('location'),
-        type: formData.get('type'),
-        salary: formData.get('salary'),
-        requirements: formData.get('requirements')
-      };
-      await fetch('/api/job', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      e.target.reset();
-      await loadJobs();
-      await loadApplications();
-    });
-
-    document.addEventListener('click', async function(e) {
-      if (e.target.classList.contains('delete-job')) {
-        const id = e.target.getAttribute('data-id');
-        await fetch(`/api/job/${id}`, { method: 'DELETE' });
-        await loadJobs();
-        await loadApplications();
-      }
-    });
-
-    // --- Applications ---
+    // Load and render applications
     async function loadApplications() {
-      const jobId = document.getElementById('jobFilter').value;
-      let url = '/api/application';
-      if (jobId) url = `/api/application/job/${jobId}`;
-      else url = '/api/application';
-      const res = await fetch(url);
-      const applications = await res.json();
-      const applicationsDiv = document.getElementById('applications');
-      applicationsDiv.innerHTML = '';
-      applications.forEach(a => {
-        const el = document.createElement('div');
-        el.className = 'application';
-        el.innerHTML = `
-          <strong>${a.name}</strong> (${a.email})<br>
-          <span style="color:var(--primary);font-weight:500;">Job ID:</span> ${a.jobId}<br>
-          <span style="color:var(--primary);font-weight:500;">Resume:</span> <a href="${a.resumeUrl}" target="_blank">${a.resumeUrl}</a>
-          <div class="application-status">Status: Received</div>
-        `;
-        applicationsDiv.appendChild(el);
-      });
+      try {
+        const response = await fetch('/api/application');
+        const applications = await response.json();
+        renderApplications(applications);
+      } catch (error) {
+        console.error('Error loading applications:', error);
+      }
     }
 
-    document.getElementById('jobFilter').addEventListener('change', loadApplications);
+    const STATUS_OPTIONS = {
+      applied: { label: 'Applied', class: 'status-applied' },
+      screening: { label: 'Screening', class: 'status-screening' },
+      interview: { label: 'Interview', class: 'status-interview' },
+      offer: { label: 'Offer', class: 'status-offer' },
+      hired: { label: 'Hired', class: 'status-hired' },
+      rejected: { label: 'Rejected', class: 'status-rejected' }
+    };
 
-    // --- Initial load ---
-    loadCompanies();
-    loadJobs();
+    function getStatusHtml(status) {
+      const statusInfo = STATUS_OPTIONS[status] || STATUS_OPTIONS.applied;
+      return `<select class="status-select ${statusInfo.class}" onchange="updateStatus(${app.id}, this.value)">
+        ${Object.entries(STATUS_OPTIONS).map(([value, info]) => `
+          <option value="${value}" ${status === value ? 'selected' : ''}>
+            ${info.label}
+          </option>
+        `).join('')}
+      </select>`;
+    }
+
+    function renderApplications(applications) {
+      const tbody = document.getElementById('candidatesTable');
+      const totalCount = document.querySelector('.total-count');
+      
+      totalCount.textContent = `${applications.length} total`;
+      
+      tbody.innerHTML = applications.map(app => {
+        const status = app.status || 'applied';
+        const statusInfo = STATUS_OPTIONS[status];
+        
+        return `
+            <tr>
+                <td>
+                    <div class="candidate-info">
+                        <span class="avatar">${getInitials(app.fullName)}</span>
+                        <div>
+                            <div>${app.fullName}</div>
+                            <div style="color: var(--text-secondary); font-size: 13px;">${app.email}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>${app.currentRole || 'Not specified'}</td>
+                <td>
+                    <select class="status-select ${statusInfo.class}" onchange="updateStatus(${app.id}, this.value)">
+                        ${Object.entries(STATUS_OPTIONS).map(([value, info]) => `
+                            <option value="${value}" ${status === value ? 'selected' : ''}>
+                                ${info.label}
+                            </option>
+                        `).join('')}
+                    </select>
+                </td>
+                <td>${new Date(app.createdAt).toLocaleDateString()}</td>
+                <td class="actions">
+                    <button class="action-btn" onclick="viewApplication(${app.id})" title="View">👁️</button>
+                    <button class="action-btn" onclick="downloadResume('${app.resumeUrl}')" title="Download Resume">📄</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+    
+    // Also update Kanban board if we're in Kanban view
+    if (document.getElementById('kanbanView').style.display !== 'none') {
+        renderKanbanBoard();
+    }
+}
+
+    async function updateStatus(id, status) {
+      try {
+        const response = await fetch(`/api/application/${id}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        
+        if (!response.ok) throw new Error('Failed to update status');
+        
+        // Refresh the applications list
+        loadApplications();
+      } catch (error) {
+        console.error('Error updating status:', error);
+        alert('Failed to update status');
+      }
+    }
+
+    function viewApplication(id) {
+      // Implement application details view
+      alert('Application details view coming soon!');
+    }
+
+    function downloadResume(url) {
+      window.open(url, '_blank');
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("candidateId", ev.target.id);
+      ev.target.classList.add('dragging');
+    }
+
+    async function drop(ev) {
+      ev.preventDefault();
+      const candidateId = ev.dataTransfer.getData("candidateId").replace('candidate-', '');
+      const newStatus = ev.target.closest('.kanban-column').dataset.status;
+      
+      try {
+        // Update the status in the backend
+        const response = await fetch(`/api/application/${candidateId}/status`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (!response.ok) throw new Error('Failed to update status');
+        
+        // Refresh both views
+        loadApplications(); // This will update both table and Kanban
+      } catch (error) {
+        console.error('Error updating candidate status:', error);
+        alert('Failed to update candidate status');
+      }
+    }
+
+    function renderKanbanCard(candidate) {
+      return `
+        <div id="candidate-${candidate.id}" class="kanban-card" draggable="true" 
+             ondragstart="drag(event)" onclick="showCandidateDetails(${candidate.id})">
+          <div class="candidate-info">
+            <div class="avatar">${getInitials(candidate.fullName)}</div>
+            <div>
+              <div class="font-medium">${candidate.fullName}</div>
+              <div class="text-sm text-gray-600">${candidate.currentRole}</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="priority-tag ${getPriorityClass(candidate.priority)}">
+              ${candidate.priority}
+            </span>
+            <span class="text-sm text-gray-600">${candidate.experience}y exp</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function showCandidateDetails(id) {
+      const panel = document.getElementById('candidatePanel');
+      const content = panel.querySelector('.candidate-panel-content');
+      
+      // Fetch candidate details
+      fetch(`/api/application/${id}`)
+        .then(res => res.json())
+        .then(candidate => {
+          content.innerHTML = `
+            <div class="space-y-4">
+              <h4 class="font-medium">${candidate.fullName}</h4>
+              <div class="text-sm">
+                <p><strong>Email:</strong> ${candidate.email}</p>
+                <p><strong>Phone:</strong> ${candidate.phone}</p>
+                <p><strong>Current Role:</strong> ${candidate.currentRole}</p>
+                <p><strong>Experience:</strong> ${candidate.experience} years</p>
+              </div>
+              <div class="mt-4">
+                <a href="${candidate.resumeUrl}" target="_blank" class="btn btn-outline">
+                  View Resume
+                </a>
+              </div>
+              <div class="mt-4">
+                <label class="block mb-2">Notes</label>
+                <textarea class="w-full p-2 border rounded" rows="4">${candidate.notes || ''}</textarea>
+              </div>
+              <button class="btn btn-primary mt-4" onclick="saveNotes(${id})">
+                Save Notes
+              </button>
+            </div>
+          `;
+        });
+      
+      panel.classList.add('active');
+    }
+
+    function closePanel() {
+      document.getElementById('candidatePanel').classList.remove('active');
+    }
+
+    // Add this new function for view switching
+    function switchView(view) {
+      // Update navigation highlighting
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.innerText.toLowerCase().includes(view)) {
+          item.classList.add('active');
+        }
+      });
+
+      // Toggle views
+      const candidatesView = document.getElementById('candidatesView');
+      const kanbanView = document.getElementById('kanbanView');
+      
+      if (view === 'candidates') {
+        candidatesView.style.display = 'block';
+        kanbanView.style.display = 'none';
+      } else {
+        candidatesView.style.display = 'none';
+        kanbanView.style.display = 'block';
+        renderKanbanBoard(); // Refresh Kanban board
+      }
+    }
+
+    // Add Kanban board rendering function
+    function renderKanbanBoard() {
+      fetch('/api/application')
+        .then(res => res.json())
+        .then(applications => {
+          // Group applications by status
+          const columns = Object.fromEntries(
+            Object.keys(STATUS_OPTIONS).map(status => [status, []])
+          );
+
+          applications.forEach(app => {
+            const status = app.status || 'applied';
+            if (columns[status]) {
+              columns[status].push(app);
+            }
+          });
+
+          // Update each column
+          Object.entries(columns).forEach(([status, apps]) => {
+            const column = document.querySelector(`.kanban-column[data-status="${status}"] .kanban-cards`);
+            column.innerHTML = apps.map(app => `
+              <div id="candidate-${app.id}" class="kanban-card" draggable="true" 
+                   ondragstart="drag(event)" onclick="showCandidateDetails(${app.id})">
+                <div class="candidate-info">
+                  <div class="avatar">${getInitials(app.fullName)}</div>
+                  <div>
+                    <div class="font-medium">${app.fullName}</div>
+                    <div class="text-sm text-gray-600">${app.currentRole || 'Not specified'}</div>
+                  </div>
+                </div>
+                <div class="card-meta">
+                  <span class="text-sm text-gray-600">Applied: ${new Date(app.createdAt).toLocaleDateString()}</span>
+                  ${app.experience ? `<span class="text-sm text-gray-600">${app.experience}y exp</span>` : ''}
+                </div>
+                <div class="card-tags">
+                  <span class="status-tag ${STATUS_OPTIONS[status].class}">${STATUS_OPTIONS[status].label}</span>
+                  ${app.referral ? '<span class="priority-tag priority-referred">Referred</span>' : ''}
+                </div>
+              </div>
+            `).join('');
+            
+            // Update column count
+            const countEl = document.querySelector(`.kanban-column[data-status="${status}"] .kanban-column-count`);
+            countEl.textContent = apps.length;
+          });
+        })
+        .catch(error => console.error('Error loading applications for Kanban:', error));
+    }
+
+    // Add helper function to get job title
+    async function getJobTitle(jobId) {
+      try {
+        const response = await fetch(`/api/job/${jobId}`);
+        const job = await response.json();
+        return `<span class="tag">${job.title}</span>`;
+      } catch (error) {
+        return '<span class="tag">Unknown Position</span>';
+      }
+    }
+
+    function getInitials(name) {
+      return name
+        .split(' ')
+        .map(word => word[0])
+        .join('')
+        .toUpperCase();
+    }
+
+    function getPriorityClass(priority) {
+      switch(priority?.toLowerCase()) {
+        case 'urgent': return 'priority-urgent';
+        case 'referred': return 'priority-referred';
+        default: return 'priority-normal';
+      }
+    }
+
+    // Load appropriate view on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check URL hash for view preference
+      const view = window.location.hash.replace('#', '') || 'candidates';
+      switchView(view);
+    });
+
+    // Load applications on page load
     loadApplications();
   </script>
 </body>

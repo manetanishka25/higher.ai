@@ -1,0 +1,24 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Rest of HR dashboard specific styles */
+.layout {
+  display: flex;
+  height: calc(100vh - 64px);
+}
+
+.sidebar {
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+}
+
+/* ...existing HR dashboard styles... */

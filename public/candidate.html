@@ -2,450 +2,279 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Careers at Company | higher.io</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CareerHub - Your career starts here</title>
   <style>
     :root {
-      --primary: #174ea6;
-      --accent: #f7c873;
-      --bg: #f4f8fb;
-      --border: #dbe2ea;
-      --danger: #e57373;
-      --success: #81c784;
-      --sidebar: #fff;
-      --main: #fff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --background: #ffffff;
+      --text: #111827;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
     }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--bg);
+
+    * { 
+      box-sizing: border-box; 
       margin: 0;
-      color: #222;
+      padding: 0;
     }
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 1.5em 1em 1em 1em;
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .navbar {
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
-      gap: 1.5em;
-      box-shadow: 0 2px 8px rgba(23,78,166,0.08);
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: white;
     }
-    .company-logo {
-      height: 48px;
-      width: 48px;
-      object-fit: contain;
-      border-radius: 8px;
-      background: #fff;
-      border: 2px solid var(--border);
-      margin-right: 1em;
-    }
-    .header-title {
-      font-size: 2em;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin: 0;
-    }
-    .header-links {
-      margin-left: auto;
+
+    .logo {
       display: flex;
-      gap: 2em;
-      font-size: 1em;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
     }
-    .header-links a {
-      color: #fff;
+
+    .logo-icon {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s;
     }
-    .header-links a:hover {
-      color: var(--accent);
-    }
-    .search-bar {
-      background: var(--sidebar);
-      padding: 1em 2em;
+
+    .nav-actions {
       display: flex;
-      align-items: center;
-      gap: 1em;
-      border-bottom: 1px solid var(--border);
+      gap: 1rem;
     }
-    .search-bar input, .search-bar select {
-      padding: 0.6em;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      font-size: 1em;
-      background: #f9fbfd;
-      margin-right: 0.5em;
-    }
-    .search-bar button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.7em 1.5em;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .search-bar button:hover {
-      background: var(--accent);
-      color: #222;
-    }
-    .job-count-bar {
-      background: #eaf2fb;
-      color: #222;
-      padding: 1em 2em;
-      font-size: 1.1em;
-      border-bottom: 1px solid var(--border);
-    }
-    .main-layout {
-      display: flex;
-      max-width: 1200px;
-      margin: 2em auto;
-      background: var(--main);
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(23,78,166,0.07);
-      min-height: 600px;
-      overflow: hidden;
-    }
-    .sidebar {
-      width: 340px;
-      background: var(--sidebar);
-      border-right: 1px solid var(--border);
-      padding: 2em 1em 2em 2em;
-      overflow-y: auto;
-    }
-    .job-listing {
-      margin-bottom: 1em;
-      padding: 1em;
-      border-radius: 8px;
-      background: #f9fbfd;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border 0.2s, background 0.2s;
-    }
-    .job-listing.selected, .job-listing:hover {
-      border: 2px solid var(--primary);
-      background: #eaf2fb;
-    }
-    .job-listing-title {
-      font-size: 1.1em;
-      color: var(--primary);
-      font-weight: bold;
-      margin-bottom: 0.2em;
-    }
-    .job-listing-location {
-      font-size: 0.95em;
-      color: #555;
-    }
-    .main-content {
-      flex: 1;
-      padding: 2em 2em 2em 2em;
-      background: var(--main);
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-    .job-detail-title {
-      font-size: 1.5em;
-      color: var(--primary);
-      font-weight: bold;
-      margin-bottom: 0.3em;
-    }
-    .job-detail-meta {
-      font-size: 1em;
-      color: #555;
-      margin-bottom: 1em;
-    }
-    .job-detail-desc, .job-detail-req {
-      margin-bottom: 1em;
-      font-size: 1.05em;
-    }
-    .apply-btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.8em 2em;
-      border-radius: 5px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 1em;
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
       font-weight: 500;
-    }
-    .apply-btn:hover {
-      background: var(--accent);
-      color: #222;
-    }
-    .modal-bg {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(23,78,166,0.12);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal-bg.active {
-      display: flex;
-    }
-    .modal {
-      background: #fff;
-      padding: 2em;
-      border-radius: 12px;
-      box-shadow: 0 4px 32px rgba(23,78,166,0.18);
-      min-width: 320px;
-      max-width: 400px;
-      width: 100%;
-      position: relative;
-    }
-    .modal-close {
-      position: absolute;
-      top: 1em;
-      right: 1em;
-      background: none;
-      border: none;
-      font-size: 1.5em;
-      color: var(--danger);
       cursor: pointer;
+      text-decoration: none;
     }
-    .apply-form label {
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 0.2em;
-      display: block;
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
     }
-    .apply-form input, .apply-form textarea {
-      padding: 0.5em;
+
+    .btn-outline {
       border: 1px solid var(--border);
-      border-radius: 5px;
-      font-size: 1em;
-      background: #f9fbfd;
-      width: 100%;
-      margin-bottom: 0.7em;
+      color: var(--text);
+      background: white;
     }
-    .apply-form input[type="file"] {
-      padding: 0.2em;
-      background: #fff;
-    }
-    .apply-form button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0.7em 1.5em;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 0.5em;
-      align-self: flex-start;
-    }
-    .apply-form button:hover {
-      background: var(--accent);
-      color: #222;
-    }
-    .apply-status {
-      margin-top: 0.5em;
-      font-weight: bold;
-      color: var(--success);
-    }
-    .apply-status.error {
-      color: var(--danger);
-    }
-    footer {
-      background: var(--primary);
-      color: #fff;
+
+    .hero {
+      padding: 4rem 2rem;
+      background: #f8fafc;
       text-align: center;
-      padding: 1.5em 1em;
-      margin-top: 3em;
-      border-radius: 0 0 12px 12px;
-      font-size: 1em;
-      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
     }
-    @media (max-width: 900px) {
-      .main-layout { flex-direction: column; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 1em; }
-      .main-content { padding: 1em; }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
     }
-    @media (max-width: 700px) {
-      header { flex-direction: column; gap: 0.5em; padding: 1em; }
-      .container { padding: 1em; }
-      .main-layout { min-height: 400px; }
-      .modal { padding: 1em; }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.25rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .job-list {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .job-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .job-card {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background: white;
+    }
+
+    .job-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .job-company {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .job-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.75rem;
+      background: #f3f4f6;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/candidate.css">
 </head>
 <body>
-  <header>
-    <img id="companyLogo" class="company-logo" src="" alt="Company Logo" />
-    <span class="header-title" id="companyName">higher.io Careers</span>
-    <nav class="header-links">
-      <a href="#">About</a>
-      <a href="#">Jobs</a>
-      <a href="#">Locations</a>
-      <a href="#">Students</a>
-    </nav>
-  </header>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search jobs..." />
-    <input type="text" id="locationInput" placeholder="City, county, postcode or 'remote'" />
-    <button id="searchBtn">Go</button>
-    <span style="margin-left:auto;"></span>
-  </div>
-  <div class="job-count-bar" id="jobCountBar">
-    <!-- Job count will be inserted here -->
-  </div>
-  <div class="main-layout">
-    <aside class="sidebar" id="sidebar">
-      <!-- Job list will be inserted here -->
-    </aside>
-    <main class="main-content" id="mainContent">
-      <!-- Selected job details will be inserted here -->
-    </main>
-  </div>
-  <div class="modal-bg" id="modalBg">
-    <div class="modal">
-      <button class="modal-close" id="modalCloseBtn">&times;</button>
-      <h2 style="color:var(--primary);margin-top:0;">Apply for this job</h2>
-      <form class="apply-form" id="applyForm" enctype="multipart/form-data">
-        <label>Your Name <input type="text" name="name" required /></label>
-        <label>Your Email <input type="email" name="email" required /></label>
-        <label>Resume (PDF/DOC) <input type="file" name="resumeFile" accept=".pdf,.doc,.docx" required /></label>
-        <button type="submit">Submit Application</button>
-      </form>
-      <div class="apply-status" id="applyStatus"></div>
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      CareerHub
+    </a>
+    <div class="nav-links">
+      <a href="#jobs">Jobs</a>
+      <a href="#about">About Us</a>
+      <a href="#culture">Culture</a>
+      <a href="#contact">Contact</a>
     </div>
-  </div>
-  <footer>
-    &copy; 2024 higher.io &mdash; Empowering hiring for modern teams.
-  </footer>
+    <div class="nav-actions">
+      <a href="#signin" class="btn btn-outline">Sign In</a>
+      <a href="#create" class="btn btn-primary">Create Account</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Your career <span>starts here</span></h1>
+    <p>Discover roles that match your skills, passions, and goals. Join a team that values growth, innovation, and making a real impact.</p>
+    <a href="#browse" class="btn btn-primary">Browse Jobs</a>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">250+</div>
+        <div class="stat-label">Open Positions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Departments</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">95%</div>
+        <div class="stat-label">Employee Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="job-list">
+    <div id="jobGrid" class="job-grid">
+      <!-- Jobs will be inserted here by JavaScript -->
+    </div>
+  </section>
+
   <script>
-    const companyId = 1;
-    let jobs = [];
-    let filteredJobs = [];
-    let selectedJob = null;
-
-    async function loadCompany() {
-      const res = await fetch(`/api/company/${companyId}`);
-      const company = await res.json();
-      document.getElementById('companyName').textContent = `${company.name} Careers @ higher.io`;
-      document.body.style.backgroundColor = company.primaryColor || '#f4f8fb';
-      document.getElementById('companyLogo').src = company.logoUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(company.name);
-    }
-
+    // Load and render jobs
     async function loadJobs() {
-      const res = await fetch(`/api/job/company/${companyId}`);
-      jobs = await res.json();
-      filteredJobs = jobs;
-      renderJobCount();
-      renderSidebar();
-      if (filteredJobs.length > 0) {
-        selectJob(filteredJobs[0].id);
-      } else {
-        document.getElementById('mainContent').innerHTML = '<div style="color:var(--danger);font-size:1.2em;">No jobs found.</div>';
-      }
-    }
-
-    function renderJobCount() {
-      document.getElementById('jobCountBar').innerHTML = `<strong>${filteredJobs.length} open jobs.</strong> Use your CV to get matched with the right job. <button class="apply-btn" style="padding:0.4em 1em;font-size:1em;margin-left:1em;" onclick="document.getElementById('sidebar').scrollIntoView({behavior:'smooth'})">FIND JOBS</button>`;
-    }
-
-    function renderSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.innerHTML = '';
-      filteredJobs.forEach(job => {
-        const jobEl = document.createElement('div');
-        jobEl.className = 'job-listing' + (selectedJob && selectedJob.id === job.id ? ' selected' : '');
-        jobEl.innerHTML = `
-          <div class="job-listing-title">${job.title}</div>
-          <div class="job-listing-location">${job.location}</div>
-        `;
-        jobEl.onclick = () => selectJob(job.id);
-        sidebar.appendChild(jobEl);
-      });
-    }
-
-    function selectJob(jobId) {
-      selectedJob = filteredJobs.find(j => j.id === jobId);
-      renderSidebar();
-      renderMainContent();
-    }
-
-    function renderMainContent() {
-      if (!selectedJob) return;
-      const main = document.getElementById('mainContent');
-      main.innerHTML = `
-        <div class="job-detail-title">${selectedJob.title}</div>
-        <div class="job-detail-meta">
-          <span><strong>Location:</strong> ${selectedJob.location}</span>
-          ${selectedJob.type ? `<span style="margin-left:1em;"><strong>Type:</strong> ${selectedJob.type}</span>` : ''}
-          ${selectedJob.salary ? `<span style="margin-left:1em;"><strong>Salary:</strong> ${selectedJob.salary}</span>` : ''}
-          <span style="margin-left:1em;"><strong>ID:</strong> ${selectedJob.id}</span>
-        </div>
-        <div class="job-detail-desc"><strong>Job Description:</strong><br>${selectedJob.description}</div>
-        <div class="job-detail-req"><strong>Requirements:</strong><br>${selectedJob.requirements}</div>
-        <button class="apply-btn" id="applyNowBtn">Apply Now</button>
-      `;
-      document.getElementById('applyNowBtn').onclick = () => openModal();
-    }
-
-    function openModal() {
-      document.getElementById('modalBg').classList.add('active');
-      document.getElementById('applyStatus').textContent = '';
-      document.getElementById('applyForm').reset();
-    }
-    function closeModal() {
-      document.getElementById('modalBg').classList.remove('active');
-    }
-    document.getElementById('modalCloseBtn').onclick = closeModal;
-    document.getElementById('modalBg').onclick = function(e) {
-      if (e.target === this) closeModal();
-    };
-
-    document.getElementById('applyForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!selectedJob) return;
-      const formData = new FormData(e.target);
-      formData.append('jobId', selectedJob.id);
       try {
-        const res = await fetch('/api/application/upload', {
-          method: 'POST',
-          body: formData
-        });
-        const statusDiv = document.getElementById('applyStatus');
-        if (res.ok) {
-          statusDiv.textContent = 'Application submitted!';
-          statusDiv.className = 'apply-status';
-          e.target.reset();
-        } else {
-          const err = await res.text();
-          statusDiv.textContent = 'Error: ' + err;
-          statusDiv.className = 'apply-status error';
-        }
-      } catch (err) {
-        const statusDiv = document.getElementById('applyStatus');
-        statusDiv.textContent = 'Error submitting application.';
-        statusDiv.className = 'apply-status error';
+        const response = await fetch('/api/job');
+        const jobs = await response.json();
+        renderJobs(jobs);
+      } catch (error) {
+        console.error('Error loading jobs:', error);
       }
-    });
+    }
 
-    document.getElementById('searchBtn').onclick = function() {
-      const search = document.getElementById('searchInput').value.trim().toLowerCase();
-      const location = document.getElementById('locationInput').value.trim().toLowerCase();
-      filteredJobs = jobs.filter(job =>
-        (!search || job.title.toLowerCase().includes(search) || job.description.toLowerCase().includes(search)) &&
-        (!location || job.location.toLowerCase().includes(location))
-      );
-      renderJobCount();
-      renderSidebar();
-      if (filteredJobs.length > 0) {
-        selectJob(filteredJobs[0].id);
-      } else {
-        document.getElementById('mainContent').innerHTML = '<div style="color:var(--danger);font-size:1.2em;">No jobs found.</div>';
+    function renderJobs(jobs) {
+      const grid = document.getElementById('jobGrid');
+      if (!jobs.length) {
+        grid.innerHTML = '<div style="text-align: center; color: var(--text-secondary);">No jobs available at the moment.</div>';
+        return;
       }
-    };
 
-    loadCompany();
+      grid.innerHTML = jobs.map(job => `
+        <div class="job-card">
+          <div class="job-title">${job.title}</div>
+          <div class="job-company">${job.department} • ${job.location}</div>
+          <div class="job-tags">
+            <span class="tag">${job.employmentType}</span>
+            <span class="tag">${job.workMode}</span>
+            ${job.salaryRange ? `<span class="tag">${job.salaryRange}</span>` : ''}
+          </div>
+          <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">
+            Posted ${new Date(job.postingDate).toLocaleDateString()}
+          </p>
+          <a href="/job-details.html?id=${job.id}" class="btn btn-primary">
+            View Details
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // Show job details modal
+    function showJobDetails(jobId) {
+      // Implementation for job details modal
+      alert('Job details functionality coming soon!');
+    }
+
+    // Load jobs on page load
     loadJobs();
   </script>
 </body>

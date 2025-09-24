@@ -1,0 +1,17 @@
+.navbar {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: white;
+}
+
+.hero {
+  padding: 4rem 2rem;
+  background: #f8fafc;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ...existing candidate page styles... */

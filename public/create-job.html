@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Job Listing - TalentBridge</title>
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/job-form.css">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --background: #F7F8FA;
+      --surface: #fff;
+      --text: #212121;
+      --border: #E0E0E0;
+      --success: #2E7D32;
+      --error: #C62828;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .form-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .form-section {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      margin-bottom: 16px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      padding: 24px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+
+    .status-message {
+      margin-top: 8px;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .status-success { background: #E8F5E9; color: var(--success); }
+    .status-error { background: #FFEBEE; color: var(--error); }
+
+    .field-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .custom-field {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: start;
+    }
+
+    .custom-field-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .field-type-select {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <form class="form-container" id="jobForm">
+    <div class="form-header">
+      <h1 class="form-title">Create New Job Listing</h1>
+    </div>
+
+    <!-- Job Basics -->
+    <div class="form-section">
+      <h2 class="section-title">Job Basics</h2>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Job Title</label>
+          <input type="text" name="title" class="form-input" required>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Department/Team</label>
+          <input type="text" name="department" class="form-input" required>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Employment Type</label>
+          <select name="employmentType" class="form-select" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Contract">Contract</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Work Mode</label>
+          <select name="workMode" class="form-select" required>
+            <option value="On-site">On-site</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Location</label>
+          <input type="text" name="location" class="form-input" required 
+                 placeholder="City, Country (or Remote - specify eligible regions)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Role Details -->
+    <div class="form-section">
+      <h2 class="section-title">Role Details</h2>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label class="form-label">Job Description</label>
+          <textarea name="description" class="form-textarea" required></textarea>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Key Responsibilities</label>
+          <textarea name="responsibilities" class="form-textarea" required
+                    placeholder="Enter each responsibility on a new line"></textarea>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Required Qualifications</label>
+          <textarea name="requiredQualifications" class="form-textarea" required></textarea>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Preferred Qualifications</label>
+          <textarea name="preferredQualifications" class="form-textarea"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compensation & Benefits -->
+    <div class="form-section">
+      <h2 class="section-title">Compensation & Benefits</h2>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Salary Range</label>
+          <input type="text" name="salaryRange" class="form-input" required
+                 placeholder="e.g. $60,000 - $80,000">
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Benefits & Perks</label>
+          <textarea name="benefits" class="form-textarea"
+                    placeholder="List key benefits, one per line"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add this section before Logistics -->
+    <div class="form-section">
+      <h2 class="section-title">Application Form Fields</h2>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label class="form-label">Required Fields</label>
+          <div class="field-options">
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="github" checked>
+              GitHub Profile
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="portfolio">
+              Portfolio/Projects
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="leetcode">
+              LeetCode Profile
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="linkedin" checked>
+              LinkedIn Profile
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="stackoverflow">
+              Stack Overflow Profile
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="requiredFields" value="kaggle">
+              Kaggle Profile
+            </label>
+          </div>
+        </div>
+
+        <div class="form-field full">
+          <label class="form-label">Custom Fields</label>
+          <div id="customFields">
+            <!-- Custom fields will be added here -->
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="addCustomField()">
+            + Add Custom Field
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logistics -->
+    <div class="form-section">
+      <h2 class="section-title">Logistics</h2>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Application Deadline</label>
+          <input type="date" name="applicationDeadline" class="form-input">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Hiring Manager</label>
+          <input type="text" name="hiringManager" class="form-input" required>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Recruiter Contact</label>
+          <input type="email" name="recruiterContact" class="form-input" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='/hr.html'">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary">Create Job Listing</button>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('jobForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(e.target);
+      
+      // Get selected required fields
+      const requiredFields = Array.from(
+        document.querySelectorAll('input[name="requiredFields"]:checked')
+      ).map(input => input.value);
+      
+      // Get custom fields
+      const customFields = Array.from(document.querySelectorAll('.custom-field')).map(field => {
+        const fieldId = field.id.replace('field-', '');
+        return {
+          label: formData.get(`customFields[${fieldId}].label`),
+          type: formData.get(`customFields[${fieldId}].type`),
+          required: formData.get(`customFields[${fieldId}].required`) === 'on'
+        };
+      });
+
+      const jobData = {
+        companyId: 1,
+        title: formData.get('title'),
+        department: formData.get('department'),
+        employmentType: formData.get('employmentType'),
+        workMode: formData.get('workMode'),
+        location: formData.get('location'),
+        description: formData.get('description'),
+        responsibilities: formData.get('responsibilities'),
+        requiredQualifications: formData.get('requiredQualifications'),
+        preferredQualifications: formData.get('preferredQualifications'),
+        salaryRange: formData.get('salaryRange'),
+        benefits: formData.get('benefits'),
+        applicationDeadline: formData.get('applicationDeadline'),
+        hiringManager: formData.get('hiringManager'),
+        recruiterContact: formData.get('recruiterContact'),
+        applicationForm: {
+          requiredFields,
+          customFields
+        }
+      };
+
+      try {
+        const response = await fetch('/api/job', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jobData)
+        });
+
+        if (!response.ok) {
+          throw new Error(await response.text());
+        }
+
+        alert('Job listing created successfully!');
+        window.location.href = '/hr.html';
+      } catch (error) {
+        alert('Error creating job listing: ' + error.message);
+        console.error('Error:', error);
+      }
+    });
+
+    function addCustomField() {
+      const container = document.getElementById('customFields');
+      const fieldId = Date.now();
+      
+      const fieldHtml = `
+        <div class="custom-field" id="field-${fieldId}">
+          <div class="custom-field-inputs">
+            <input type="text" class="form-input" placeholder="Field Label" 
+                   name="customFields[${fieldId}].label" required>
+            <select class="form-select field-type-select" 
+                    name="customFields[${fieldId}].type" required>
+              <option value="text">Text Input</option>
+              <option value="url">URL</option>
+              <option value="number">Number</option>
+              <option value="textarea">Text Area</option>
+              <option value="select">Dropdown</option>
+            </select>
+            <div class="field-options">
+              <label>
+                <input type="checkbox" name="customFields[${fieldId}].required">
+                Required
+              </label>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" 
+                  onclick="removeCustomField(${fieldId})">Remove</button>
+        </div>
+      `;
+      
+      container.insertAdjacentHTML('beforeend', fieldHtml);
+    }
+
+    function removeCustomField(fieldId) {
+      document.getElementById(`field-${fieldId}`).remove();
+    }
+  </script>
+</body>
+</html>

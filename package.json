@@ -11,8 +11,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^2.2.0",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
-  }
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.18.2",
+    "multer": "^1.4.5-lts.1",
+    "winston": "^3.17.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manetanishka25/higher.ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manetanishka25/higher.ai/issues"
+  },
+  "homepage": "https://github.com/manetanishka25/higher.ai#readme"
 }
