@@ -9,25 +9,20 @@ const jobs = [];
 router.post('/', (req, res) => {
   try {
     const id = jobs.length + 1;
+    const applicationForm = req.body.applicationForm || { requiredFields: [], customFields: [] };
     const job = {
       id,
       ...req.body,
-      applicationForm: {
-        requiredFields: req.body.requiredFields || [],
-        customFields: req.body.customFields || []
-      },
+      applicationForm,
       createdAt: new Date().toISOString()
     };
-    
     jobs.push(job);
-    
     logger.info('Job created successfully', {
       jobId: job.id,
       title: job.title,
       department: job.department,
-      requiredFields: job.applicationForm.requiredFields
+      requiredFields: applicationForm.requiredFields
     });
-    
     res.status(201).json(job);
   } catch (error) {
     logger.error('Error creating job', {

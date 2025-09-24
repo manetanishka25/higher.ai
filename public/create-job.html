@@ -319,15 +319,14 @@
   <script>
     document.getElementById('jobForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Get form data
+
       const formData = new FormData(e.target);
-      
+
       // Get selected required fields
       const requiredFields = Array.from(
         document.querySelectorAll('input[name="requiredFields"]:checked')
       ).map(input => input.value);
-      
+
       // Get custom fields
       const customFields = Array.from(document.querySelectorAll('.custom-field')).map(field => {
         const fieldId = field.id.replace('field-', '');
